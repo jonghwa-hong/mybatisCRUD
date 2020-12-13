@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Employee Form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</head>
+<style>
+    .container {
+        position: absolute;
+        top: 20%;
+        left: 38%;
+    }
+</style>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>INSERT FROM</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <form action="#" th:action="@{/insertUser}" method="post" th:object="${user}">
+                <fieldset>
+                    <span class="pull-right">
+						    <input type="submit" id="submitButton" class="btn btn-success" th:value="Save">
+						    <input type="reset" id="resetButton" class="btn btn-danger" th:value="Reset"/>
+					</span>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th> Title</th>
+                            <th> Content</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>empno</td>
+                            <td><input type="text" title="empno" th:field="*{empno}" required></td>
+                        </tr>
+                        <tr>
+                            <td>ename</td>
+                            <td><input type="text" title="ename" th:field="*{ename}"></td>
+                        </tr>
+                        <tr>
+                            <td>job</td>
+                            <td><input type="text" title="job" th:field="*{job}"></td>
+                        </tr>
+                        <tr>
+                            <td>mgr</td>
+                            <td><input type="text" title="mgr" th:field="*{mgr}"></td>
+                        </tr>
+                        <tr>
+                            <td>hredate</td>
+                            <td><input type="date" title="hiredate" th:field="*{hiredate}"></td>
+                        </tr>
+                        <tr>
+                            <td>sal</td>
+                            <td><input type="text" title="sal" th:field="*{sal}"></td>
+                        </tr>
+                        <tr>
+                            <td>comm</td>
+                            <td><input type="text" title="comm" th:field="*{comm}"></td>
+                        </tr>
+                        <tr>
+                            <td>deptno</td>
+                            <td><input type="text" title="deptno" th:field="*{deptno}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

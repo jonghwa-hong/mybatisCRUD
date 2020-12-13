@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.userMapper.UserMapper">
+    <select id="selectUserList" resultType="com.example.demo.userDomain.UserDTO">
+        <![CDATA[
+        SELECT *
+        FROM EMP
+        ]]>
+    </select>
+
+    <select id="selectUser" parameterType="integer" resultType="com.example.demo.userDomain.UserDTO">
+        <![CDATA[
+        SELECT *
+        FROM EMP
+        WHERE EMPNO = #{id}
+        ]]>
+    </select>
+
+    <delete id="deleteUser" parameterType="integer">
+        <![CDATA[
+        DELETE
+        FROM EMP
+        WHERE EMPNO = #{id}
+        ]]>
+    </delete>
+
+    <insert id="insertUser" parameterType="com.example.demo.userDomain.UserDTO">
+        <![CDATA[
+        INSERT INTO EMP (empno, ename, job, mgr, hiredate, sal, comm, deptno)
+        VALUES (#{empno}, #{ename}, #{job}, #{mgr}, #{hiredate}, #{sal}, #{comm}, #{deptno})
+        ]]>
+    </insert>
+
+    <update id="updateUser" parameterType="com.example.demo.userDomain.UserDTO">
+        <![CDATA[
+        UPDATE EMP
+        SET ename    = #{ename},
+            job      = #{job},
+            mgr      = #{mgr},
+            hiredate = #{hiredate},
+            sal      = #{sal},
+            comm     = #{comm},
+            deptno   = #{deptno}
+        WHERE empno = #{empno}
+        ]]>
+    </update>
+</mapper>
