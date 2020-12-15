@@ -1,8 +1,9 @@
 package com.example.demo.userService;
 
+import com.example.demo.userDomain.DeptDTO;
 import com.example.demo.userDomain.UserDTO;
+import com.example.demo.userMapper.DeptMapper;
 import com.example.demo.userMapper.UserMapper;
-import com.example.demo.userService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +12,22 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserMapper userMapper;
+    private final UserMapper userMapper;
+    private final DeptMapper deptMapper;
+
+    public UserServiceImpl(UserMapper userMapper, DeptMapper deptMapper) {
+        this.userMapper = userMapper;
+        this.deptMapper = deptMapper;
+    }
 
     @Override
     public List<UserDTO> getUserList() {
         return userMapper.selectUserList();
+    }
+
+    @Override
+    public List<UserDTO> getUserDetailList() {
+        return userMapper.selectDetailUsers();
     }
 
     @Override
@@ -37,5 +48,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(UserDTO userDTO) {
         userMapper.updateUser(userDTO);
+    }
+
+    @Override
+    public DeptDTO getUserByDept(Integer deptno) {
+        return deptMapper.selectUserByDeptno(deptno);
+    }
+
+    @Override
+    public List<DeptDTO> getDeptList() {
+        return deptMapper.selectDeptList();
     }
 }

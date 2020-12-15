@@ -2,39 +2,76 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.demo.userMapper.UserMapper">
+    <resultMap id="userMapper_result" type="com.example.demo.userDomain.UserDTO">
+        <id property="empno" column="empno"/>
+        <result property="ename" column="ename"/>
+        <result property="job" column="job"/>
+        <result property="mgr" column="mgr"/>
+        <result property="hiredate" column="hiredate"/>
+        <result property="sal" column="sal"/>
+        <result property="comm" column="comm"/>
+        <result property="deptno" column="deptno"/>
+        <association property="deptDTO"
+                     javaType="com.example.demo.userDomain.DeptDTO" resultMap="deptMapper_result"/>
+    </resultMap>
+
+    <resultMap id="deptMapper_result" type="com.example.demo.userDomain.DeptDTO">
+        <id property="deptno" column="deptno"/>
+        <result property="dname" column="dname"/>
+        <result property="loc" column="loc"/>
+    </resultMap>
+
+    <!-- TODO outerJoin 1:1 매핑 -->
+    <select id="selectDetailUsers" resultMap="userMapper_result">
+        <![CDATA[SELECT e.empno,
+                        e.ename,
+                        e.job,
+                        e.mgr,
+                        e.hiredate,
+                        e.sal,
+                        e.comm,
+                        d.deptno,
+                        d.dname,
+                        d.loc
+                 FROM emp e,
+                      dept d
+                 WHERE e.deptno = d.deptno
+                         ]]>
+    </select>
+
     <select id="selectUserList" resultType="com.example.demo.userDomain.UserDTO">
         <![CDATA[
         SELECT *
-        FROM EMP
+        FROM emp
         ]]>
     </select>
 
     <select id="selectUser" parameterType="integer" resultType="com.example.demo.userDomain.UserDTO">
         <![CDATA[
         SELECT *
-        FROM EMP
-        WHERE EMPNO = #{id}
+        FROM emp
+        WHERE empno = #{id}
         ]]>
     </select>
 
     <delete id="deleteUser" parameterType="integer">
         <![CDATA[
         DELETE
-        FROM EMP
-        WHERE EMPNO = #{id}
+        FROM emp
+        WHERE empno = #{id}
         ]]>
     </delete>
 
     <insert id="insertUser" parameterType="com.example.demo.userDomain.UserDTO">
         <![CDATA[
-        INSERT INTO EMP (empno, ename, job, mgr, hiredate, sal, comm, deptno)
+        INSERT INTO emp (empno, ename, job, mgr, hiredate, sal, comm, deptno)
         VALUES (#{empno}, #{ename}, #{job}, #{mgr}, #{hiredate}, #{sal}, #{comm}, #{deptno})
         ]]>
     </insert>
 
     <update id="updateUser" parameterType="com.example.demo.userDomain.UserDTO">
         <![CDATA[
-        UPDATE EMP
+        UPDATE emp
         SET ename    = #{ename},
             job      = #{job},
             mgr      = #{mgr},

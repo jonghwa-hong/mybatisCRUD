@@ -14,14 +14,25 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/selectUser")
     @ResponseBody
     public String selectAllEmployee(Model model) {
         List<UserDTO> employeeList = userService.getUserList();
         log.info("******************* SELECT ALL USER *******************");
+        employeeList.forEach(c -> log.info(c.toString()));
+        return "모든 사원 조회";
+    }
+    @GetMapping("/selectDetailUser")
+    @ResponseBody
+    public String selectAllDetailEmployee(Model model) {
+        List<UserDTO> employeeList = userService.getUserDetailList();
+        log.info("******************* SELECT ALL Detail USER *******************");
         employeeList.forEach(c -> log.info(c.toString()));
         return "모든 사원 조회";
     }

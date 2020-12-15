@@ -21,6 +21,7 @@ public class UserDTO {
     private Date hiredate;
     private Integer sal;
     private Integer comm;
-    private Integer deptno;
+    private int deptno;
+    private DeptDTO deptDTO;
 
 }

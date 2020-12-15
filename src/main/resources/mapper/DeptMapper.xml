@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.userMapper.DeptMapper">
+    <resultMap id="deptMap-result" type="com.example.demo.userDomain.DeptDTO">
+        <id property="deptno" column="deptno"/>
+        <result property="dname" column="dname"/>
+        <result property="loc" column="loc"/>
+        <collection property="employees" ofType="com.example.demo.userDomain.UserDTO">
+            <id property="empno" column="empno"/>
+            <result property="ename" column="ename"/>
+            <result property="job" column="job"/>
+            <result property="mgr" column="mgr"/>
+            <result property="hiredate" column="hiredate"/>
+            <result property="sal" column="sal"/>
+            <result property="comm" column="comm"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectDeptList" resultType="com.example.demo.userDomain.DeptDTO">
+        <![CDATA[
+        SELECT deptno, dname, loc
+        FROM dept
+        ]]>
+    </select>
+    <!-- TODO 1 : N -->
+    <select id="selectUserByDeptno" parameterType="int" resultMap="deptMap-result">
+        <![CDATA[
+        SELECT d.deptno,
+               d.dname,
+               d.loc,
+               e.empno,
+               e.job,
+               e.mgr,
+               e.hiredate,
+               e.sal,
+               e.comm
+        FROM dept d,
+             emp e
+        WHERE d.deptno = #{deptno}
+          AND d.deptno = e.deptno
+        ]]>
+    </select>
+</mapper>
